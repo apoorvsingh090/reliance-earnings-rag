@@ -1,0 +1,24 @@
+# Pinned to the versions verified by the M9 test run (Python 3.12, Windows).
+# psycopg/pgvector are required only for the PostgreSQL production cutover;
+# local runs use the SQLite fallback without them.
+# Note: sentence-transformers pulls torch; CPU-only torch is sufficient
+# (pip installs the CUDA wheel by default — use the +cpu index if size matters).
+fastapi==0.141.1
+uvicorn[standard]==0.54.0
+pydantic==2.11.3
+pydantic-settings==2.15.0
+python-dotenv==1.2.3
+requests==2.34.2
+httpx==0.28.1
+SQLAlchemy==2.1.0
+psycopg[binary]==3.2.3
+pgvector==0.3.6
+pandas==2.2.3
+beautifulsoup4==4.13.3
+lxml==5.4.0
+PyMuPDF==1.28.2
+sentence-transformers==6.1.0
+rank-bm25==0.2.2
+numpy==2.2.5
+streamlit==1.64.0
+pytest==9.1.1

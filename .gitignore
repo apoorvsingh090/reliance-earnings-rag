@@ -1,0 +1,16 @@
+__pycache__/
+*.pyc
+.env
+.venv/
+venv/
+data/raw/
+!data/raw/.gitkeep
+data/processed/registry.json
+data/processed/manifest.json
+data/processed/*.db
+data/processed/*.pkl
+data/processed/eval_report.json
+data/extracted/
+!data/extracted/.gitkeep
+.pytest_cache/
+*.log

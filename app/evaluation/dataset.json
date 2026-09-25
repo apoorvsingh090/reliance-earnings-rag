@@ -1,0 +1,552 @@
+[
+  {
+    "id": "F1",
+    "category": "fact",
+    "route": "FINANCIAL_FACT",
+    "question": "What was consolidated revenue in Q1 FY27?",
+    "facts": [
+      {
+        "metric": "revenue_from_operations",
+        "period": "Q1 FY27",
+        "report_type": "consolidated",
+        "value": 311850.0,
+        "tol": 0.51
+      }
+    ],
+    "citations": [
+      "[NSE Q1 FY27 Consolidated XBRL]"
+    ],
+    "contains": [
+      "311,850"
+    ]
+  },
+  {
+    "id": "F2",
+    "category": "standalone_vs_consolidated",
+    "route": "FINANCIAL_FACT",
+    "question": "What was standalone revenue in Q1 FY27?",
+    "facts": [
+      {
+        "metric": "revenue_from_operations",
+        "period": "Q1 FY27",
+        "report_type": "standalone",
+        "value": 166013.0,
+        "tol": 0.51
+      }
+    ],
+    "citations": [
+      "[NSE Q1 FY27 Standalone XBRL]"
+    ],
+    "contains": [
+      "166,013"
+    ],
+    "absent_scoped": [
+      "311,850"
+    ]
+  },
+  {
+    "id": "F3",
+    "category": "fact",
+    "route": "FINANCIAL_FACT",
+    "question": "What was consolidated profit after tax in Q1 FY27?",
+    "facts": [
+      {
+        "metric": "pat_total",
+        "period": "Q1 FY27",
+        "report_type": "consolidated",
+        "value": 23196.0,
+        "tol": 0.51
+      }
+    ],
+    "citations": [
+      "[NSE Q1 FY27 Consolidated XBRL]"
+    ],
+    "contains": [
+      "23,196"
+    ]
+  },
+  {
+    "id": "F4",
+    "category": "fact",
+    "route": "FINANCIAL_FACT",
+    "question": "What was consolidated basic EPS in Q1 FY27?",
+    "facts": [
+      {
+        "metric": "eps_basic",
+        "period": "Q1 FY27",
+        "report_type": "consolidated",
+        "value": 15.48,
+        "tol": 0.02
+      }
+    ],
+    "citations": [
+      "[NSE Q1 FY27 Consolidated XBRL]"
+    ],
+    "contains": [
+      "15.48"
+    ]
+  },
+  {
+    "id": "F5",
+    "category": "fact",
+    "route": "FINANCIAL_FACT",
+    "question": "What was consolidated net worth in Q1 FY27?",
+    "facts": [
+      {
+        "metric": "net_worth",
+        "period": "Q1 FY27",
+        "report_type": "consolidated",
+        "value": 880365.0,
+        "tol": 0.51
+      }
+    ],
+    "citations": [
+      "Media Release annexure"
+    ],
+    "contains": [
+      "880,365"
+    ]
+  },
+  {
+    "id": "C1",
+    "category": "yoy",
+    "route": "CALCULATION",
+    "question": "What was revenue growth YoY?",
+    "facts": [
+      {
+        "metric": "revenue_from_operations",
+        "period": "Q1 FY27",
+        "report_type": "consolidated",
+        "value": 311850.0,
+        "tol": 0.51
+      },
+      {
+        "metric": "revenue_from_operations",
+        "period": "Q1 FY26",
+        "report_type": "consolidated",
+        "value": 248660.0,
+        "tol": 0.51
+      }
+    ],
+    "citations": [
+      "XBRL"
+    ],
+    "contains": [
+      "25.41%"
+    ]
+  },
+  {
+    "id": "C2",
+    "category": "yoy",
+    "route": "CALCULATION",
+    "question": "What was PAT growth YoY on a consolidated basis in Q1 FY27?",
+    "facts": [
+      {
+        "metric": "pat_total",
+        "period": "Q1 FY27",
+        "report_type": "consolidated",
+        "value": 23196.0,
+        "tol": 0.51
+      }
+    ],
+    "citations": [
+      "XBRL"
+    ],
+    "contains": [
+      "-24.65%"
+    ]
+  },
+  {
+    "id": "Q1",
+    "category": "qoq",
+    "route": "CALCULATION",
+    "question": "What was revenue growth QoQ in Q1 FY27?",
+    "facts": [
+      {
+        "metric": "revenue_from_operations",
+        "period": "Q4 FY26",
+        "report_type": "consolidated",
+        "value": 298621.0,
+        "tol": 0.51
+      }
+    ],
+    "citations": [
+      "XBRL"
+    ],
+    "contains": [
+      "4.43%"
+    ]
+  },
+  {
+    "id": "Q2",
+    "category": "qoq",
+    "route": "CALCULATION",
+    "question": "What was PAT growth quarter-on-quarter in Q1 FY27?",
+    "facts": [
+      {
+        "metric": "pat_total",
+        "period": "Q4 FY26",
+        "report_type": "consolidated",
+        "value": 20589.0,
+        "tol": 0.51
+      }
+    ],
+    "citations": [
+      "XBRL"
+    ],
+    "contains": [
+      "12.66%"
+    ]
+  },
+  {
+    "id": "M1",
+    "category": "calculation",
+    "route": "SEGMENT_ANALYSIS",
+    "question": "What was O2C EBIT margin in Q1 FY27?",
+    "facts": [
+      {
+        "metric": "segment_ebit",
+        "period": "Q1 FY27",
+        "report_type": "consolidated",
+        "value": 14170.0,
+        "tol": 0.51,
+        "segment": "o2c"
+      }
+    ],
+    "citations": [
+      "XBRL"
+    ],
+    "contains": [
+      "7.02"
+    ]
+  },
+  {
+    "id": "M2",
+    "category": "calculation",
+    "route": "SEGMENT_ANALYSIS",
+    "question": "What was Retail EBITDA margin in Q1 FY27?",
+    "facts": [
+      {
+        "metric": "segment_ebitda",
+        "period": "Q1 FY27",
+        "report_type": "consolidated",
+        "value": 6309.0,
+        "tol": 0.51,
+        "segment": "retail"
+      }
+    ],
+    "citations": [
+      "XBRL"
+    ],
+    "contains": [
+      "6.98"
+    ]
+  },
+  {
+    "id": "P1",
+    "category": "calculation",
+    "route": "CALCULATION",
+    "question": "How did operating margin change YoY in Q1 FY27?",
+    "facts": [
+      {
+        "metric": "operating_margin",
+        "period": "Q1 FY27",
+        "report_type": "consolidated",
+        "value": 9.5,
+        "tol": 0.05
+      },
+      {
+        "metric": "operating_margin",
+        "period": "Q1 FY26",
+        "report_type": "consolidated",
+        "value": 10.6,
+        "tol": 0.05
+      }
+    ],
+    "citations": [
+      "annexure"
+    ],
+    "contains": [
+      "-1.1"
+    ]
+  },
+  {
+    "id": "S1",
+    "category": "segment",
+    "route": "SEGMENT_ANALYSIS",
+    "question": "What was Retail revenue in Q1 FY27?",
+    "facts": [
+      {
+        "metric": "segment_revenue",
+        "period": "Q1 FY27",
+        "report_type": "consolidated",
+        "value": 90409.0,
+        "tol": 0.51,
+        "segment": "retail"
+      }
+    ],
+    "citations": [
+      "XBRL"
+    ],
+    "contains": [
+      "90,409"
+    ]
+  },
+  {
+    "id": "S2",
+    "category": "segment",
+    "route": "SEGMENT_ANALYSIS",
+    "question": "What was Jio revenue growth YoY?",
+    "facts": [
+      {
+        "metric": "segment_revenue",
+        "period": "Q1 FY27",
+        "report_type": "consolidated",
+        "value": 46900.0,
+        "tol": 0.51,
+        "segment": "digital_services"
+      }
+    ],
+    "citations": [
+      "XBRL"
+    ],
+    "contains": [
+      "11.80%"
+    ]
+  },
+  {
+    "id": "S3",
+    "category": "segment",
+    "route": "SEGMENT_ANALYSIS",
+    "question": "What was Retail revenue growth YoY?",
+    "facts": [
+      {
+        "metric": "segment_revenue",
+        "period": "Q1 FY27",
+        "report_type": "consolidated",
+        "value": 90409.0,
+        "tol": 0.51,
+        "segment": "retail"
+      }
+    ],
+    "citations": [
+      "XBRL"
+    ],
+    "contains": [
+      "7.41%"
+    ]
+  },
+  {
+    "id": "S4",
+    "category": "segment",
+    "route": "SEGMENT_ANALYSIS",
+    "question": "What share of revenue came from O2C in Q1 FY27?",
+    "facts": [
+      {
+        "metric": "segment_revenue",
+        "period": "Q1 FY27",
+        "report_type": "consolidated",
+        "value": 201803.0,
+        "tol": 0.51,
+        "segment": "o2c"
+      }
+    ],
+    "citations": [
+      "XBRL"
+    ],
+    "contains": [
+      "64.71"
+    ]
+  },
+  {
+    "id": "N1",
+    "category": "commentary",
+    "route": "GUIDANCE",
+    "question": "What did management say about capex?",
+    "facts": [],
+    "keywords": [],
+    "citations": [
+      "Media Release"
+    ],
+    "contains": [
+      "Sources used"
+    ]
+  },
+  {
+    "id": "N2",
+    "category": "commentary",
+    "route": "FINANCIAL_FACT",
+    "question": "What was the average KGD6 production in Q1 FY27?",
+    "facts": [],
+    "keywords": [
+      "kgd6"
+    ],
+    "citations": [
+      "Media Release"
+    ],
+    "contains": [
+      "Sources used"
+    ]
+  },
+  {
+    "id": "N3",
+    "category": "commentary",
+    "route": "QUALITATIVE",
+    "question": "What drove Jio's growth in Q1 FY27?",
+    "facts": [],
+    "keywords": [
+      "jio"
+    ],
+    "citations": [
+      "Media Release"
+    ],
+    "contains": [
+      "Sources used"
+    ]
+  },
+  {
+    "id": "A1",
+    "category": "ambiguous",
+    "route": "FINANCIAL_FACT",
+    "question": "What was revenue?",
+    "facts": [
+      {
+        "metric": "revenue_from_operations",
+        "period": "Q1 FY27",
+        "report_type": "consolidated",
+        "value": 311850.0,
+        "tol": 0.51
+      }
+    ],
+    "citations": [
+      "XBRL"
+    ],
+    "contains": [
+      "311,850",
+      "consolidated"
+    ]
+  },
+  {
+    "id": "X1",
+    "category": "missing",
+    "route": "FINANCIAL_FACT",
+    "question": "What was total debt in Q1 FY27?",
+    "facts": [],
+    "keywords": [],
+    "citations": [],
+    "contains": [
+      "don't have"
+    ]
+  },
+  {
+    "id": "H1",
+    "category": "fact",
+    "route": "FINANCIAL_FACT",
+    "question": "What was consolidated revenue in Q1 FY26?",
+    "facts": [
+      {
+        "metric": "revenue_from_operations",
+        "period": "Q1 FY26",
+        "report_type": "consolidated",
+        "value": 248660.0,
+        "tol": 0.51
+      }
+    ],
+    "citations": [
+      "annexure"
+    ],
+    "contains": [
+      "248,660"
+    ]
+  },
+  {
+    "id": "G1",
+    "category": "commentary",
+    "route": "GUIDANCE",
+    "question": "What is the outlook for Retail?",
+    "facts": [],
+    "keywords": [
+      "retail"
+    ],
+    "citations": [
+      "Media Release"
+    ],
+    "contains": [
+      "Sources used"
+    ]
+  },
+  {
+    "id": "XQ1",
+    "category": "cross_quarter",
+    "route": "CROSS_QUARTER",
+    "question": "Compare operating margin between Q1 FY26 and Q1 FY27.",
+    "facts": [
+      {
+        "metric": "operating_margin",
+        "period": "Q1 FY27",
+        "report_type": "consolidated",
+        "value": 9.5,
+        "tol": 0.05
+      },
+      {
+        "metric": "operating_margin",
+        "period": "Q1 FY26",
+        "report_type": "consolidated",
+        "value": 10.6,
+        "tol": 0.05
+      }
+    ],
+    "citations": [
+      "annexure"
+    ],
+    "contains": [
+      "9.5",
+      "10.6"
+    ]
+  },
+  {
+    "id": "G2",
+    "category": "commentary",
+    "route": "GENERAL",
+    "question": "Hello there",
+    "facts": [],
+    "keywords": [],
+    "citations": [
+      "Media Release"
+    ],
+    "contains": [
+      "Sources used"
+    ]
+  },
+  {
+    "id": "B2",
+    "category": "standalone_vs_consolidated",
+    "route": "COMPARISON",
+    "question": "How does standalone revenue compare to consolidated revenue in Q1 FY27?",
+    "facts": [
+      {
+        "metric": "revenue_from_operations",
+        "period": "Q1 FY27",
+        "report_type": "standalone",
+        "value": 166013.0,
+        "tol": 0.51
+      },
+      {
+        "metric": "revenue_from_operations",
+        "period": "Q1 FY27",
+        "report_type": "consolidated",
+        "value": 311850.0,
+        "tol": 0.51
+      }
+    ],
+    "citations": [
+      "[NSE Q1 FY27 Standalone XBRL]",
+      "[NSE Q1 FY27 Consolidated XBRL]"
+    ],
+    "contains": [
+      "166,013",
+      "311,850",
+      "side by side"
+    ]
+  }
+]
