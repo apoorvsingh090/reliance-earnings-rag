@@ -1,0 +1,366 @@
+{
+  "total": 26,
+  "passed": 26,
+  "metrics": {
+    "retrieval_recall": 1.0,
+    "citation_accuracy": 1.0,
+    "numerical_accuracy": 1.0,
+    "answer_correctness": 1.0
+  },
+  "by_category": {
+    "fact": {
+      "passed": 5,
+      "total": 5
+    },
+    "standalone_vs_consolidated": {
+      "passed": 2,
+      "total": 2
+    },
+    "yoy": {
+      "passed": 2,
+      "total": 2
+    },
+    "qoq": {
+      "passed": 2,
+      "total": 2
+    },
+    "calculation": {
+      "passed": 3,
+      "total": 3
+    },
+    "segment": {
+      "passed": 4,
+      "total": 4
+    },
+    "commentary": {
+      "passed": 5,
+      "total": 5
+    },
+    "ambiguous": {
+      "passed": 1,
+      "total": 1
+    },
+    "missing": {
+      "passed": 1,
+      "total": 1
+    },
+    "cross_quarter": {
+      "passed": 1,
+      "total": 1
+    }
+  },
+  "questions": [
+    {
+      "id": "F1",
+      "category": "fact",
+      "passed": true,
+      "route_ok": true,
+      "facts_recall": 1.0,
+      "keywords_recall": null,
+      "citations_acc": 1.0,
+      "numeric_acc": 1.0,
+      "absent_ok": null,
+      "notes": []
+    },
+    {
+      "id": "F2",
+      "category": "standalone_vs_consolidated",
+      "passed": true,
+      "route_ok": true,
+      "facts_recall": 1.0,
+      "keywords_recall": null,
+      "citations_acc": 1.0,
+      "numeric_acc": 1.0,
+      "absent_ok": true,
+      "notes": []
+    },
+    {
+      "id": "F3",
+      "category": "fact",
+      "passed": true,
+      "route_ok": true,
+      "facts_recall": 1.0,
+      "keywords_recall": null,
+      "citations_acc": 1.0,
+      "numeric_acc": 1.0,
+      "absent_ok": null,
+      "notes": []
+    },
+    {
+      "id": "F4",
+      "category": "fact",
+      "passed": true,
+      "route_ok": true,
+      "facts_recall": 1.0,
+      "keywords_recall": null,
+      "citations_acc": 1.0,
+      "numeric_acc": 1.0,
+      "absent_ok": null,
+      "notes": []
+    },
+    {
+      "id": "F5",
+      "category": "fact",
+      "passed": true,
+      "route_ok": true,
+      "facts_recall": 1.0,
+      "keywords_recall": null,
+      "citations_acc": 1.0,
+      "numeric_acc": 1.0,
+      "absent_ok": null,
+      "notes": []
+    },
+    {
+      "id": "C1",
+      "category": "yoy",
+      "passed": true,
+      "route_ok": true,
+      "facts_recall": 1.0,
+      "keywords_recall": null,
+      "citations_acc": 1.0,
+      "numeric_acc": 1.0,
+      "absent_ok": null,
+      "notes": []
+    },
+    {
+      "id": "C2",
+      "category": "yoy",
+      "passed": true,
+      "route_ok": true,
+      "facts_recall": 1.0,
+      "keywords_recall": null,
+      "citations_acc": 1.0,
+      "numeric_acc": 1.0,
+      "absent_ok": null,
+      "notes": []
+    },
+    {
+      "id": "Q1",
+      "category": "qoq",
+      "passed": true,
+      "route_ok": true,
+      "facts_recall": 1.0,
+      "keywords_recall": null,
+      "citations_acc": 1.0,
+      "numeric_acc": 1.0,
+      "absent_ok": null,
+      "notes": []
+    },
+    {
+      "id": "Q2",
+      "category": "qoq",
+      "passed": true,
+      "route_ok": true,
+      "facts_recall": 1.0,
+      "keywords_recall": null,
+      "citations_acc": 1.0,
+      "numeric_acc": 1.0,
+      "absent_ok": null,
+      "notes": []
+    },
+    {
+      "id": "M1",
+      "category": "calculation",
+      "passed": true,
+      "route_ok": true,
+      "facts_recall": 1.0,
+      "keywords_recall": null,
+      "citations_acc": 1.0,
+      "numeric_acc": 1.0,
+      "absent_ok": null,
+      "notes": []
+    },
+    {
+      "id": "M2",
+      "category": "calculation",
+      "passed": true,
+      "route_ok": true,
+      "facts_recall": 1.0,
+      "keywords_recall": null,
+      "citations_acc": 1.0,
+      "numeric_acc": 1.0,
+      "absent_ok": null,
+      "notes": []
+    },
+    {
+      "id": "P1",
+      "category": "calculation",
+      "passed": true,
+      "route_ok": true,
+      "facts_recall": 1.0,
+      "keywords_recall": null,
+      "citations_acc": 1.0,
+      "numeric_acc": 1.0,
+      "absent_ok": null,
+      "notes": []
+    },
+    {
+      "id": "S1",
+      "category": "segment",
+      "passed": true,
+      "route_ok": true,
+      "facts_recall": 1.0,
+      "keywords_recall": null,
+      "citations_acc": 1.0,
+      "numeric_acc": 1.0,
+      "absent_ok": null,
+      "notes": []
+    },
+    {
+      "id": "S2",
+      "category": "segment",
+      "passed": true,
+      "route_ok": true,
+      "facts_recall": 1.0,
+      "keywords_recall": null,
+      "citations_acc": 1.0,
+      "numeric_acc": 1.0,
+      "absent_ok": null,
+      "notes": []
+    },
+    {
+      "id": "S3",
+      "category": "segment",
+      "passed": true,
+      "route_ok": true,
+      "facts_recall": 1.0,
+      "keywords_recall": null,
+      "citations_acc": 1.0,
+      "numeric_acc": 1.0,
+      "absent_ok": null,
+      "notes": []
+    },
+    {
+      "id": "S4",
+      "category": "segment",
+      "passed": true,
+      "route_ok": true,
+      "facts_recall": 1.0,
+      "keywords_recall": null,
+      "citations_acc": 1.0,
+      "numeric_acc": 1.0,
+      "absent_ok": null,
+      "notes": []
+    },
+    {
+      "id": "N1",
+      "category": "commentary",
+      "passed": true,
+      "route_ok": true,
+      "facts_recall": null,
+      "keywords_recall": null,
+      "citations_acc": 1.0,
+      "numeric_acc": 1.0,
+      "absent_ok": null,
+      "notes": []
+    },
+    {
+      "id": "N2",
+      "category": "commentary",
+      "passed": true,
+      "route_ok": true,
+      "facts_recall": null,
+      "keywords_recall": 1.0,
+      "citations_acc": 1.0,
+      "numeric_acc": 1.0,
+      "absent_ok": null,
+      "notes": []
+    },
+    {
+      "id": "N3",
+      "category": "commentary",
+      "passed": true,
+      "route_ok": true,
+      "facts_recall": null,
+      "keywords_recall": 1.0,
+      "citations_acc": 1.0,
+      "numeric_acc": 1.0,
+      "absent_ok": null,
+      "notes": []
+    },
+    {
+      "id": "A1",
+      "category": "ambiguous",
+      "passed": true,
+      "route_ok": true,
+      "facts_recall": 1.0,
+      "keywords_recall": null,
+      "citations_acc": 1.0,
+      "numeric_acc": 1.0,
+      "absent_ok": null,
+      "notes": []
+    },
+    {
+      "id": "X1",
+      "category": "missing",
+      "passed": true,
+      "route_ok": true,
+      "facts_recall": null,
+      "keywords_recall": null,
+      "citations_acc": null,
+      "numeric_acc": 1.0,
+      "absent_ok": null,
+      "notes": []
+    },
+    {
+      "id": "H1",
+      "category": "fact",
+      "passed": true,
+      "route_ok": true,
+      "facts_recall": 1.0,
+      "keywords_recall": null,
+      "citations_acc": 1.0,
+      "numeric_acc": 1.0,
+      "absent_ok": null,
+      "notes": []
+    },
+    {
+      "id": "G1",
+      "category": "commentary",
+      "passed": true,
+      "route_ok": true,
+      "facts_recall": null,
+      "keywords_recall": 1.0,
+      "citations_acc": 1.0,
+      "numeric_acc": 1.0,
+      "absent_ok": null,
+      "notes": []
+    },
+    {
+      "id": "XQ1",
+      "category": "cross_quarter",
+      "passed": true,
+      "route_ok": true,
+      "facts_recall": 1.0,
+      "keywords_recall": null,
+      "citations_acc": 1.0,
+      "numeric_acc": 1.0,
+      "absent_ok": null,
+      "notes": []
+    },
+    {
+      "id": "G2",
+      "category": "commentary",
+      "passed": true,
+      "route_ok": true,
+      "facts_recall": null,
+      "keywords_recall": null,
+      "citations_acc": 1.0,
+      "numeric_acc": 1.0,
+      "absent_ok": null,
+      "notes": []
+    },
+    {
+      "id": "B2",
+      "category": "standalone_vs_consolidated",
+      "passed": true,
+      "route_ok": true,
+      "facts_recall": 1.0,
+      "keywords_recall": null,
+      "citations_acc": 1.0,
+      "numeric_acc": 1.0,
+      "absent_ok": null,
+      "notes": []
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+[
+  {
+    "filename": "NSE_Q1FY27_consolidated_xbrl.html",
+    "document_type": "xbrl",
+    "quarter": "Q1",
+    "period": "Q1 FY27",
+    "reporting_basis": "consolidated",
+    "source_url": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_175608_17072026195004_iXBRL_WEB.html",
+    "sha256": "d52ae37a9b374b207f43392d9478c4f4ba30df528a060a519cf203c0d1444a4e",
+    "file_size": 51704,
+    "publication_date": "2026-07-17",
+    "company": "Reliance Industries Limited",
+    "ticker": "RELIANCE"
+  },
+  {
+    "filename": "NSE_Q1FY27_standalone_xbrl.html",
+    "document_type": "xbrl",
+    "quarter": "Q1",
+    "period": "Q1 FY27",
+    "reporting_basis": "standalone",
+    "source_url": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_175606_17072026194906_iXBRL_WEB.html",
+    "sha256": "2e5923b52656a1a64a79055afd04a0aa2e1c1dbf97d8d8864b1c2f73f4ae9f9e",
+    "file_size": 51455,
+    "publication_date": "2026-07-17",
+    "company": "Reliance Industries Limited",
+    "ticker": "RELIANCE"
+  },
+  {
+    "filename": "RIL_Q1FY27_media_release.pdf",
+    "document_type": "media_release",
+    "quarter": "Q1",
+    "period": "Q1 FY27",
+    "reporting_basis": "consolidated",
+    "source_url": "https://www.ril.com/sites/default/files/2026-07/Media_Release_RIL_Q1_FY2026-27_Financial_and_Operational_Performance.pdf",
+    "sha256": "cc99e455d2501f8084bf3d3e36a3c628fc8c8c4992ae896aabaa548b01578dff",
+    "file_size": 858218,
+    "publication_date": "2026-07-17",
+    "company": "Reliance Industries Limited",
+    "ticker": "RELIANCE"
+  }
+]
