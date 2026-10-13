@@ -287,7 +287,9 @@ python scripts/extract_q1fy27.py
 # Chunk + embed + build BM25 (needs HF access once for all-MiniLM-L6-v2)
 python scripts/index_q1fy27.py
 
-# Run tests (67 across 8 test files)
+# Run tests (67 across 8 test files; 13 need the raw seed docs in data/raw/,
+# which is git-ignored — fresh clones show 54 passed + 13 skipped, 67/67
+# with the seed set downloaded via scripts/ingest_q1fy27.py)
 pytest -q
 
 # Backend (health + manifest + structured facts + narrative search w/ citations)
@@ -330,11 +332,12 @@ commentary carries its own citations.
 
 ## 15. Hardening (M9)
 
-- `requirements.txt` pinned to the verified environment; unused imports removed;
+- `requirements.txt` floored with major-version caps (full pins in `requirements-dev.txt`); unused imports removed;
+- Built `data/processed/*` artifacts (SQLite facts DB, BM25 pickle, eval report, manifest, registry) are force-committed for the Cloud deploy despite the gitignore — refresh via `scripts/` + `run_eval.py` and re-commit (note: `run_eval.py` rewrites the tracked `eval_report.json`).
   `.env.example` covers retrieval settings; derived artifacts git-ignored.
 - No secrets in the repo (audited); no claimed scores beyond the measured eval report.
 - Eval grew to **26 questions** with B2 (explicit cross-basis comparison).
-- Full suite: **67 tests, all passing**; eval CLI green at **26/26**.
+- Full suite: **67 tests** — 54 pass everywhere; the other 13 need the raw seed documents (see §12), 67/67 with them present. Eval CLI green at **26/26**.
 
 
 ## 16. Limitations (current)

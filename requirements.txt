@@ -1,10 +1,12 @@
 # Cloud-safe set for the Streamlit entry points (dashboard.py needs only this).
 # Install requirements-dev.txt for full local dev: extraction, embeddings (torch),
 # Q&A (streamlit_app.py), postgres/pgvector cutover, and the test suite.
-streamlit>=1.37
-pandas>=2.0
-SQLAlchemy>=2.0
-pydantic>=2
+# Floors + major-version caps: guards Cloud rebuilds against breaking majors
+# (full pins live in requirements-dev.txt).
+streamlit>=1.37,<2
+pandas>=2.0,<3
+SQLAlchemy>=2.0,<3
+pydantic>=2,<3
 pydantic-settings
 python-dotenv
 requests
