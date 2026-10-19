@@ -5,13 +5,13 @@
 # local runs use the SQLite fallback without them.
 # Note: sentence-transformers pulls torch; CPU-only torch is sufficient
 # (pip installs the CUDA wheel by default — use the +cpu index if size matters).
-fastapi==0.141.1
+fastapi==0.143.3
 uvicorn[standard]==0.54.0
 httpx==0.28.1
-psycopg[binary]==3.2.3
-pgvector==0.3.6
-beautifulsoup4==4.13.3
-lxml==5.4.0
+psycopg[binary]==3.3.6
+pgvector==0.5.1
+beautifulsoup4==4.15.0
+lxml==6.1.3
 PyMuPDF==1.28.2
 sentence-transformers==6.1.0
 rank-bm25==0.2.2
