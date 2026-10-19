@@ -1,0 +1,46 @@
+name: Bug Report
+description: Report a bug in Reliance Earnings RAG
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for the report! Search existing issues first.
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: Clear description of the bug.
+      placeholder: Steps, expected behaviour, actual behaviour.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behaviour
+    validations:
+      required: true
+  - type: checkboxes
+    id: area
+    attributes:
+      label: Area
+      options:
+        - label: 'ingestion / registry'
+        - label: 'extraction (PDF / XBRL)'
+        - label: 'retrieval / citations'
+        - label: 'calculation engine'
+        - label: 'LLM answers / routing'
+        - label: 'evaluation'
+        - label: 'UI (Streamlit / FastAPI)'
+  - type: textarea
+    id: repro
+    attributes:
+      label: Reproduction
+      description: Commands, URLs, input data, screenshots.
+      render: shell
+  - type: input
+    id: version
+    attributes:
+      label: Version / commit
+      placeholder: e.g. commit SHA or "latest main"
+

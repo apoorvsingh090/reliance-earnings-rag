@@ -1,5 +1,9 @@
 # Reliance Earnings Intelligence RAG
 
+[![CI](https://img.shields.io/github/actions/workflow/status/apoorvsingh090/reliance-earnings-rag/ci.yml?branch=main)](https://github.com/apoorvsingh090/reliance-earnings-rag/actions/workflows/ci.yml)
+[![CodeQL](https://img.shields.io/github/actions/workflow/status/apoorvsingh090/reliance-earnings-rag/codeql.yml?branch=main&label=codeql)](https://github.com/apoorvsingh090/reliance-earnings-rag/actions/workflows/codeql.yml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+
 MIT licensed — see [LICENSE](LICENSE).
 
 A financial-document RAG system for **Reliance Industries Ltd. (NSE: RELIANCE)** that combines
@@ -361,3 +365,23 @@ commentary carries its own citations.
 Multi-quarter ingestion (Q4 FY25–Q4 FY26 + transcripts/presentations), learned
 rerank, LLM-judged eval with an API key, Postgres/pgvector production cutover,
 auth + rate limits, `app/api/` route split once the surface grows.
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for setup, the golden rules, and the
+test workflow; [CHANGELOG.md](CHANGELOG.md) tracks changes. By participating
+you agree to the [Code of Conduct](CODE_OF_CONDUCT.md). Use the issue
+templates for bugs and feature requests; beginner-friendly work carries the
+[`good first issue`](https://github.com/apoorvsingh090/reliance-earnings-rag/labels/good%20first%20issue)
+label.
+
+## Security
+
+Report tooling vulnerabilities (secret leakage, upload/CSRF issues, supply
+chain) privately via
+[GitHub Security Advisories](https://github.com/apoorvsingh090/reliance-earnings-rag/security/advisories);
+see [SECURITY.md](SECURITY.md).
+
+## License
+
+MIT — see [LICENSE](LICENSE).
