@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from sqlalchemy import select
+
 from app.models.chunk import Chunk
 from app.models.database import ChunkRow
 from app.retrieval.interfaces import RetrievedChunk
@@ -27,6 +29,20 @@ def _to_chunk(row: ChunkRow) -> Chunk:
     )
 
 
+def _rows_for_ids(session, chunk_ids: list[str]) -> dict[str, ChunkRow]:
+    """Batch hydration: one SELECT ... IN for k hits instead of k SELECTs."""
+    if not chunk_ids:
+        return {}
+    stmt = select(ChunkRow).where(ChunkRow.chunk_id.in_(chunk_ids))
+    return {r.chunk_id: r for r in session.execute(stmt).scalars().all()}
+
+
+def _allowed_ids(session, filters: dict | None) -> set[str] | None:
+    from app.retrieval.vector_store import filtered_chunk_ids
+
+    return filtered_chunk_ids(session, filters)
+
+
 class SemanticRetriever:
     name = "semantic"
 
@@ -36,9 +52,16 @@ class SemanticRetriever:
 
     def search(self, query: str, k: int = 8, filters: dict | None = None) -> list[RetrievedChunk]:
         q = self.provider.embed_texts([query])[0]
+        hits = self.store.search(q, k=k, filters=filters)
+        session = getattr(self.store, "session", None)
+        rows = (
+            _rows_for_ids(session, [cid for cid, _ in hits])
+            if session is not None
+            else {}
+        )
         out = []
-        for cid, score in self.store.search(q, k=k, filters=filters):
-            row = self.store.hydrate(cid)
+        for cid, score in hits:
+            row = rows.get(cid) if rows else self.store.hydrate(cid)
             if row is None:
                 continue
             out.append(RetrievedChunk(chunk=_to_chunk(row), score=float(score), source="semantic"))
@@ -53,21 +76,12 @@ class BM25Retriever:
         self.session = session
 
     def search(self, query: str, k: int = 8, filters: dict | None = None) -> list[RetrievedChunk]:
-        from app.retrieval.vector_store import FILTER_FIELDS
-
-        allowed = None
-        if filters:
-            from sqlalchemy import select
-
-            stmt = select(ChunkRow.chunk_id)
-            for key, value in filters.items():
-                if key not in FILTER_FIELDS or value is None:
-                    continue
-                stmt = stmt.where(getattr(ChunkRow, key) == value)
-            allowed = set(self.session.execute(stmt).scalars().all())
+        allowed = _allowed_ids(self.session, filters)
+        hits = self.index.search(query, k=k, allowed_ids=allowed)
+        rows = _rows_for_ids(self.session, [cid for cid, _ in hits])
         out = []
-        for cid, score in self.index.search(query, k=k, allowed_ids=allowed):
-            row = self.session.get(ChunkRow, cid)
+        for cid, score in hits:
+            row = rows.get(cid)
             if row is None:
                 continue
             out.append(RetrievedChunk(chunk=_to_chunk(row), score=float(score), source="bm25"))

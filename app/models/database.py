@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import logging
 from datetime import datetime, timezone
+from functools import lru_cache
 from pathlib import Path
 
 from sqlalchemy import Float, ForeignKey, LargeBinary, String, Text, UniqueConstraint, create_engine, select
@@ -79,14 +80,20 @@ def sqlite_default_path() -> Path:
     return get_settings().processed_dir / "reliance_earnings.db"
 
 
-def get_engine(url: str | None = None):
-    """Engine for url (or settings DATABASE_URL), with SQLite fallback."""
-    from app.config import get_settings
+@lru_cache(maxsize=8)
+def _engine_for(candidate: str):
+    """Create (once) and cache the engine for a given DB url.
 
-    candidate = url or get_settings().database_url
+    Cached because per-request engine creation re-probes the connection and
+    rebuilds the pool on every call in the FastAPI path.
+    """
     if candidate.startswith("postgresql"):
         try:
-            engine = create_engine(candidate, pool_pre_timeout=3, connect_args={"connect_timeout": 3})
+            engine = create_engine(
+                candidate,
+                pool_pre_ping=True,
+                connect_args={"connect_timeout": 3},
+            )
             with engine.connect():
                 pass
             log.info("connected to PostgreSQL")
@@ -95,7 +102,16 @@ def get_engine(url: str | None = None):
             log.warning("PostgreSQL unreachable (%s); using local SQLite fallback", exc)
     fallback = sqlite_default_path()
     fallback.parent.mkdir(parents=True, exist_ok=True)
-    return create_engine(f"sqlite:///{fallback}")
+    return create_engine(
+        f"sqlite:///{fallback}", connect_args={"check_same_thread": False}
+    )
+
+
+def get_engine(url: str | None = None):
+    """Engine for url (or settings DATABASE_URL), with SQLite fallback."""
+    from app.config import get_settings
+
+    return _engine_for(url or get_settings().database_url)
 
 
 def init_db(engine=None):
@@ -104,9 +120,14 @@ def init_db(engine=None):
     return engine
 
 
+@lru_cache(maxsize=8)
+def _sessionmaker_for(engine) -> sessionmaker:
+    return sessionmaker(bind=engine)
+
+
 def get_session(engine=None) -> Session:
     engine = engine or get_engine()
-    return sessionmaker(bind=engine)()
+    return _sessionmaker_for(engine)()
 
 
 def upsert_document(session: Session, record) -> DocumentRow:

@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import threading
 from functools import lru_cache
 
 from fastapi import FastAPI, HTTPException
@@ -33,6 +34,20 @@ from app.retrieval.retrievers import BM25Retriever, PassthroughReranker, Semanti
 from app.retrieval.vector_store import LocalVectorStore
 
 app = FastAPI(title="Reliance Earnings Intelligence RAG", version="0.9.0")
+
+_bm25_lock = threading.Lock()
+_bm25_cached: tuple[float | None, BM25Index] | None = None
+
+
+def _bm25_index() -> BM25Index:
+    """Load the pickled BM25 index once, keyed on file mtime (query-time is hot)."""
+    global _bm25_cached
+    path = get_settings().bm25_path
+    mtime = path.stat().st_mtime if path.exists() else None
+    with _bm25_lock:
+        if _bm25_cached is None or _bm25_cached[0] != mtime:
+            _bm25_cached = (mtime, BM25Index.load(path))
+        return _bm25_cached[1]
 
 
 @app.get("/health")
@@ -80,7 +95,7 @@ def _semantic_for(session) -> SemanticRetriever:
 
 
 def _bm25_for(session) -> BM25Retriever:
-    return BM25Retriever(BM25Index.load(get_settings().bm25_path), session)
+    return BM25Retriever(_bm25_index(), session)
 
 
 @app.get("/search")

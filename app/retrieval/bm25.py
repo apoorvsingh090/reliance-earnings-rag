@@ -45,11 +45,17 @@ class BM25Index:
         if self._bm25 is None or not self.chunk_ids:
             return []
         scores = self._bm25.get_scores(tokenize(query))
-        ranked = sorted(zip(self.chunk_ids, scores), key=lambda t: t[1], reverse=True)
-        out = [(cid, float(s)) for cid, s in ranked if s > 0]
         if allowed_ids is not None:
-            out = [(cid, s) for cid, s in out if cid in allowed_ids]
-        return out[:k]
+            # Filter before sorting: only sort the allowed subset, not the
+            # whole corpus (stable sort keeps the original corpus order).
+            scored = [
+                (cid, s) for cid, s in zip(self.chunk_ids, scores)
+                if s > 0 and cid in allowed_ids
+            ]
+        else:
+            scored = [(cid, s) for cid, s in zip(self.chunk_ids, scores) if s > 0]
+        scored.sort(key=lambda t: t[1], reverse=True)
+        return [(cid, float(s)) for cid, s in scored[:k]]
 
     def save(self, path: Path) -> Path:
         path.parent.mkdir(parents=True, exist_ok=True)
