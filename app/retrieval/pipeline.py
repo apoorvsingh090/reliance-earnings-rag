@@ -32,8 +32,11 @@ log = logging.getLogger(__name__)
 
 
 def _resolve_raw_path(local_path: str) -> Path:
-    p = Path(local_path)
-    return p if p.exists() else PROJECT_ROOT / local_path
+    # Committed seed records carry Windows separators; normalize so
+    # re-indexing works on POSIX hosts as well.
+    normalized = local_path.replace("\\", "/")
+    p = Path(normalized)
+    return p if p.exists() else PROJECT_ROOT / normalized
 
 
 def build_chunks_for_record(record) -> list[Chunk]:

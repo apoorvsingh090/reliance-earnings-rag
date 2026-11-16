@@ -8,7 +8,9 @@ M7 adds register_local_file() for user-uploaded documents (no download step).
 from __future__ import annotations
 
 import logging
+import os
 import shutil
+import tempfile
 from pathlib import Path
 
 from app.config import get_settings
@@ -16,7 +18,7 @@ from app.ingestion import documents as docspecs
 from app.ingestion.downloader import download_file
 from app.ingestion.hashing import sha256_file
 from app.ingestion.registry import DocumentRegistry, write_manifest
-from app.ingestion.validate import validate_file
+from app.ingestion.validate import ValidationError, validate_file
 from app.models.document import DocumentRecord, DocumentSpec
 
 log = logging.getLogger(__name__)
@@ -74,6 +76,44 @@ def load_manifest() -> list[dict]:
     if not path.exists():
         return []
     return json.loads(path.read_text(encoding="utf-8"))
+
+
+# Uploads are user-controlled bytes heading for PyMuPDF/HTML parsing on a
+# small container: cap them well above any real filing (seed max ~1 MB)
+# and well below Streamlit's own 200 MB default.
+MAX_UPLOAD_BYTES = 50 * 1024 * 1024
+
+
+def register_upload_bytes(
+    data: bytes, filename: str, spec: DocumentSpec
+) -> tuple[DocumentRecord, bool]:
+    """Register an uploaded byte payload (M7 upload flow).
+
+    Writes to a temp file, validates + registers, and always removes the
+    temp file — even when validation fails — so repeated uploads cannot
+    fill the server temp dir. Refuses when a *different* file is already
+    registered under the same name, so an upload can never silently swap
+    in another document's bytes (filenames come from the uploader).
+    """
+    if len(data) > MAX_UPLOAD_BYTES:
+        raise ValidationError(
+            f"{filename}: {len(data):,} bytes exceeds the "
+            f"{MAX_UPLOAD_BYTES:,} byte upload limit"
+        )
+    suffix = Path(filename).suffix.lower()
+    fd, tmp = tempfile.mkstemp(suffix=suffix)
+    try:
+        os.close(fd)
+        Path(tmp).write_bytes(data)
+        dest = get_settings().raw_dir / Path(spec.filename).name
+        if dest.exists() and sha256_file(dest) != sha256_file(Path(tmp)):
+            raise ValidationError(
+                f"{spec.filename}: a different file with this name is "
+                "already registered; rename your upload"
+            )
+        return register_local_file(spec, Path(tmp))
+    finally:
+        Path(tmp).unlink(missing_ok=True)
 
 
 def register_local_file(spec: DocumentSpec, src_path: Path) -> tuple[DocumentRecord, bool]:

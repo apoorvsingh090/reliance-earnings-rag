@@ -98,9 +98,15 @@ def _bm25_for(session) -> BM25Retriever:
     return BM25Retriever(_bm25_index(), session)
 
 
+def _clamp_k(k: int) -> int:
+    """Bound top-k so a stray ?k=1000000 cannot blow up retrieval latency."""
+    return max(1, min(k, 50))
+
+
 @app.get("/search")
 def search(q: str, k: int = 8, method: str = "hybrid") -> dict:
     """Retrieval with citations. method: hybrid (default) | semantic | bm25."""
+    k = _clamp_k(k)
     session = get_session()
     try:
         if method == "semantic":
@@ -178,6 +184,7 @@ def ask(q: str, k: int = 6) -> dict:
 
     Uses the LLM when a key is configured, otherwise the extractive template.
     """
+    k = _clamp_k(k)
     session = get_session()
     try:
         sem = SemanticRetriever(_provider(), LocalVectorStore(session))
