@@ -7,8 +7,10 @@ from pathlib import Path
 import pytest
 
 from app.config import get_settings
-from app.ingestion.pipeline import register_local_file
+from app.ingestion import pipeline as upload_pipeline
+from app.ingestion.pipeline import register_local_file, register_upload_bytes
 from app.ingestion.validate import ValidationError
+from app.models.document import DocumentRecord
 from app.llm.router import route
 from app.models.document import DocumentSpec
 
@@ -79,3 +81,56 @@ def test_upload_filename_cannot_escape_raw_dir(monkeypatch, tmp_path: Path):
 def test_ui_basis_prefix_convention_routes_standalone():
     assert route("On a standalone basis: What was revenue in Q1 FY27?").report_type == "standalone"
     assert route("What was revenue in Q1 FY27?").report_type == "consolidated"
+
+
+def _tmp_root(monkeypatch, tmp_path: Path) -> Path:
+    """Route mkstemp into an observable dir so cleanup is verifiable."""
+    root = tmp_path / "tmproot"
+    root.mkdir()
+    real_mkstemp = upload_pipeline.tempfile.mkstemp
+
+    def _fake_mkstemp(*args, **kwargs):
+        fd, name = real_mkstemp(*args, dir=str(root), **kwargs)
+        return fd, name
+
+    monkeypatch.setattr(upload_pipeline.tempfile, "mkstemp", _fake_mkstemp)
+    return root
+
+
+def test_upload_bytes_registers_and_removes_tmp(monkeypatch, tmp_path: Path):
+    _isolate(monkeypatch, tmp_path)
+    root = _tmp_root(monkeypatch, tmp_path)
+    rec, created = register_upload_bytes(_pdf_bytes(60), "up.pdf", _spec())
+    assert created and rec.file_size > 100
+    assert list(root.iterdir()) == []
+
+
+def test_upload_bytes_cleans_tmp_on_validation_failure(monkeypatch, tmp_path: Path):
+    _isolate(monkeypatch, tmp_path)
+    root = _tmp_root(monkeypatch, tmp_path)
+    with pytest.raises(ValidationError):
+        register_upload_bytes(b"%PDF-1.4 short", "tiny.pdf", _spec())
+    assert list(root.iterdir()) == []
+
+
+def test_upload_bytes_rejects_oversize(monkeypatch, tmp_path: Path):
+    _isolate(monkeypatch, tmp_path)
+    root = _tmp_root(monkeypatch, tmp_path)
+    monkeypatch.setattr(upload_pipeline, "MAX_UPLOAD_BYTES", 100)
+    with pytest.raises(ValidationError, match="exceeds"):
+        register_upload_bytes(b"%PDF-1.4\n" + b"x" * 200, "big.pdf", _spec())
+    assert list(root.iterdir()) == []
+
+
+def test_upload_bytes_rejects_name_collision(monkeypatch, tmp_path: Path):
+    settings = _isolate(monkeypatch, tmp_path)
+    root = _tmp_root(monkeypatch, tmp_path)
+    settings.raw_dir.mkdir(parents=True, exist_ok=True)
+    (settings.raw_dir / "TEST_upload.pdf").write_bytes(_pdf_bytes(60))
+    # Same bytes under the same name: idempotent, no error.
+    rec, created = register_upload_bytes(_pdf_bytes(60), "up.pdf", _spec())
+    assert isinstance(rec, DocumentRecord)
+    # Different bytes under the same name: refuse, never swap files.
+    with pytest.raises(ValidationError, match="already registered"):
+        register_upload_bytes(_pdf_bytes(61), "up.pdf", _spec())
+    assert list(root.iterdir()) == []

@@ -19,6 +19,7 @@ import pandas as pd
 import streamlit as st
 
 from app.config import get_settings
+from app.financial.display import yoy_delta_label
 from app.financial.query import get_fact, list_facts
 from app.models.database import (
     count_chunks,
@@ -160,8 +161,10 @@ for col, (metric, label, _unit) in zip(cols, KPI_METRICS):
     delta = None
     if prev:
         pv = _get(prev, metric if metric != "pat_total" or pat_owners is None else "pat_owners")
-        if pv:
-            delta = f"{(v / pv - 1) * 100:+.1f}% YoY"
+        # Same growth-vs-magnitude convention as the calc engine (display.py),
+        # so a narrowing loss reads positive here exactly as in /calc.
+        lbl = yoy_delta_label(v, pv) if pv else None
+        delta = f"{lbl} YoY" if lbl else None
     col.metric(label, fmt_value(metric, v), delta)
 
 # ---------------------------------------------------------------- segments ---

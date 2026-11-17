@@ -23,10 +23,13 @@ log = logging.getLogger(__name__)
 
 
 def _resolve_raw_path(local_path: str) -> Path:
-    p = Path(local_path)
+    # Committed seed records carry Windows separators; normalize so
+    # re-extraction works on POSIX hosts as well.
+    normalized = local_path.replace("\\", "/")
+    p = Path(normalized)
     if p.exists():
         return p
-    return PROJECT_ROOT / local_path
+    return PROJECT_ROOT / normalized
 
 
 def run_extraction(engine=None) -> dict:

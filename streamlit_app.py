@@ -7,7 +7,6 @@ Main: Q&A with route/mode/basis, calculations, and expandable sources.
 from __future__ import annotations
 
 import sys
-import tempfile
 from datetime import date
 from pathlib import Path
 
@@ -16,7 +15,7 @@ sys.path.insert(0, ".")
 import streamlit as st
 
 from app.config import get_settings
-from app.ingestion.pipeline import load_manifest, register_local_file
+from app.ingestion.pipeline import load_manifest, register_upload_bytes
 from app.llm.answers import answer_question
 from app.llm.providers import get_llm_provider
 from app.models.database import count_chunks, count_embeddings, count_facts, get_session
@@ -96,10 +95,6 @@ with st.sidebar:
                                                    "not_applicable"])
     pub_date = st.date_input("Publication date", date(2026, 7, 17))
     if st.button("Ingest document", disabled=upload is None):
-        suffix = Path(upload.name).suffix.lower()
-        with tempfile.NamedTemporaryFile(delete=False, suffix=suffix) as tmp:
-            tmp.write(upload.getvalue())
-            tmp_path = Path(tmp.name)
         spec = DocumentSpec(
             company=company, ticker=ticker or "RELIANCE",
             financial_year=fy, quarter=quarter, period=f"{quarter} {fy}",
@@ -109,7 +104,8 @@ with st.sidebar:
             publication_date=pub_date.isoformat(),
         )
         try:
-            record, created = register_local_file(spec, tmp_path)
+            record, created = register_upload_bytes(
+                upload.getvalue(), upload.name, spec)
             st.success(f"{'Ingested' if created else 'Already registered'}: "
                        f"{record.filename} ({record.file_size:,} bytes)")
         except Exception as exc:  # noqa: BLE001 — show, don't crash

@@ -92,9 +92,12 @@ class DocumentRecord(BaseModel):
     def from_spec(
         cls, spec: DocumentSpec, document_hash: str, file_size: int, local_path: Path | str
     ) -> "DocumentRecord":
+        # Store POSIX separators so records written on Windows resolve on
+        # POSIX hosts too (Streamlit Cloud, containers); readers also
+        # normalize defensively for records already committed with "\\".
         return cls(
             **spec.model_dump(),
             document_hash=document_hash,
             file_size=file_size,
-            local_path=str(local_path),
+            local_path=str(local_path).replace("\\", "/"),
         )
